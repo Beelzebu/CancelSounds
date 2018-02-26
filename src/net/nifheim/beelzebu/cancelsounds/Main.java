@@ -39,6 +39,8 @@ public class Main extends JavaPlugin {
 
     private void reload() {
         saveResource("config.yml", false);
+        sounds.clear();
+        reloadConfig();
         getConfig().getStringList("Sounds").forEach(sound -> {
             try {
                 sounds.add(Sound.valueOf(sound.toUpperCase().replaceAll("\\.", "_")));
@@ -51,7 +53,6 @@ public class Main extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender.hasPermission("cancelsounds.reload")) {
-            reloadConfig();
             reload();
             sender.sendMessage("§aPlugin reloaded.");
         }
