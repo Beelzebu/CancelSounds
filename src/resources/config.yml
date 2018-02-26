@@ -1,0 +1,11 @@
+# CancelSounds by:
+# Cancel any server side soun
+# You can find the sounds in https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+
+Sounds:
+- ENTITY_PLAYER_ATTACK_SWEEP
+- ENTITY_PLAYER_ATTACK_NODAMAGE
+- ENTITY_PLAYER_ATTACK_STRONG
+- ENTITY_PLAYER_ATTACK_KNOCKBACK
+- ENTITY_PLAYER_ATTACK_CRIT
+- ENTITY_PLAYER_ATTACK_WEAK

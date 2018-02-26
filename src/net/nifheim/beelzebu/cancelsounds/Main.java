@@ -7,25 +7,21 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
 import org.bukkit.Sound;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
     private ProtocolManager protocolManager;
+    private final Set<Sound> sounds = new HashSet<>();
 
     @Override
     public void onEnable() {
-        HashSet<Sound> sounds = new HashSet<>();
-        sounds.add(Sound.ENTITY_PLAYER_ATTACK_SWEEP);
-        sounds.add(Sound.ENTITY_PLAYER_ATTACK_NODAMAGE);
-        sounds.add(Sound.ENTITY_PLAYER_ATTACK_STRONG);
-        sounds.add(Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK);
-        sounds.add(Sound.ENTITY_PLAYER_ATTACK_CRIT);
-        sounds.add(Sound.ENTITY_PLAYER_ATTACK_WEAK);
-        sounds.add(Sound.BLOCK_PORTAL_AMBIENT);
-        sounds.add(Sound.BLOCK_PORTAL_TRAVEL);
-        sounds.add(Sound.BLOCK_PORTAL_TRIGGER);
+        reload();
         protocolManager = ProtocolLibrary.getProtocolManager();
         protocolManager.addPacketListener(new PacketAdapter(this, new PacketType[]{PacketType.Play.Server.NAMED_SOUND_EFFECT}) {
             @Override
@@ -39,5 +35,26 @@ public class Main extends JavaPlugin {
                 }
             }
         });
+    }
+
+    private void reload() {
+        saveResource("config.yml", false);
+        getConfig().getStringList("Sounds").forEach(sound -> {
+            try {
+                sounds.add(Sound.valueOf(sound.toUpperCase().replaceAll("\\.", "_")));
+            } catch (Exception ex) {
+                getLogger().log(Level.WARNING, "{0} isn''t a valid sound.", sound);
+            }
+        });
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (sender.hasPermission("cancelsounds.reload")) {
+            reloadConfig();
+            reload();
+            sender.sendMessage("§aPlugin reloaded.");
+        }
+        return true;
     }
 }
