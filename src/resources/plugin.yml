@@ -2,6 +2,6 @@ name: CancelSounds
 main: net.nifheim.beelzebu.cancelsounds.Main
 version: ${project.version}
 author: Beelzebu
-softdepend: [ProtocolLib]
+depend: [ProtocolLib]
 commands:
   cancelsoundsreload:
