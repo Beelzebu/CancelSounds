@@ -1,5 +1,5 @@
 # CancelSounds by: Beelzebu
-# Cancel any server side soun
+# Cancel any server side sound
 # You can find the sounds in https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
 
 Sounds:
@@ -9,3 +9,7 @@ Sounds:
 - ENTITY_PLAYER_ATTACK_KNOCKBACK
 - ENTITY_PLAYER_ATTACK_CRIT
 - ENTITY_PLAYER_ATTACK_WEAK
+
+# Replace sounds, format: 'sound:replacement'
+Replace:
+- 'HURT_FLESH:ARROW_HIT'
